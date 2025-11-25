@@ -366,7 +366,7 @@ See [LICENSE](LICENSE) for details.
 
 ## Maintainers
 
-This project is maintained by [Salt Technologies](https://www.salttechno.com), a leading [Software Development Company](https://www.salttechno.com). We specialize in building scalable digital solutions.
+This project is maintained by Salt Technologies, a leading [Software Development Company](https://www.salttechno.com). We specialize in building scalable digital solutions.
 
 ---
 
