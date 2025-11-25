@@ -1,0 +1,42 @@
+{
+  "name": "wp-to-sanity-migration",
+  "version": "1.0.0",
+  "description": "A complete WordPress to Sanity CMS migration tool with Portable Text support. Migrates posts, categories, tags, and media from WordPress to Sanity.",
+  "main": "src/migrate.js",
+  "type": "module",
+  "scripts": {
+    "migrate": "node src/migrate.js",
+    "test": "node src/test-connection.js"
+  },
+  "keywords": [
+    "wordpress",
+    "sanity",
+    "migration",
+    "cms",
+    "portable-text",
+    "blog",
+    "content-migration",
+    "headless-cms"
+  ],
+  "author": "Salt Technologies <info@salttechno.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salttechno/wp-to-sanity-migration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/salttechno/wp-to-sanity-migration/issues"
+  },
+  "homepage": "https://github.com/salttechno/wp-to-sanity-migration#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@sanity/block-tools": "^3.70.0",
+    "@sanity/client": "^6.22.2",
+    "@sanity/schema": "^4.18.0",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "jsdom": "^27.2.0"
+  }
+}
