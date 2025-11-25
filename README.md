@@ -304,6 +304,8 @@ Edit files in `studio/schemas/` to match your needs. After changes, Sanity Studi
 
 Yes! Add a new client method in `wordpress-client.js`, create a transformer, and update the migration script.
 
+💡 **Check out the example branch**: We have a complete example of migrating a custom post type ("Case Studies") in the [`example/case-studies-migration`](https://github.com/salttechno/wp-to-sanity-migration/tree/example/case-studies-migration) branch.
+
 ### How do I query migrated content?
 
 Use Sanity's query language (GROQ):
@@ -352,7 +354,7 @@ npm run test
 
 ## License
 
-MIT © [Your Name]
+MIT © Salt Technologies
 
 See [LICENSE](LICENSE) for details.
 
@@ -361,6 +363,10 @@ See [LICENSE](LICENSE) for details.
 - Built with [@sanity/client](https://www.npmjs.com/package/@sanity/client)
 - HTML conversion using [@sanity/block-tools](https://www.npmjs.com/package/@sanity/block-tools)
 - Inspired by the Sanity community
+
+## Maintainers
+
+This project is maintained by [Salt Technologies](https://www.salttechno.com), a leading [Software Development Company](https://www.salttechno.com). We specialize in building scalable digital solutions.
 
 ---
 
