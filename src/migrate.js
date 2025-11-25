@@ -4,6 +4,8 @@ import {
   transformPost,
   transformCategory,
   transformTag,
+  transformCaseStudy,
+  transformCaseStudyCategory,
 } from "./transformers.js";
 
 const wpClient = new WordPressClient();
@@ -112,6 +114,51 @@ async function migratePosts() {
   }
 }
 
+async function migrateCaseStudyCategories() {
+  console.log("\n📁 Migrating Case Study Categories...");
+  try {
+    const categories = await wpClient.getCaseStudyCategories();
+    console.log(`Found ${categories.length} case study categories`);
+
+    for (const category of categories) {
+      const sanityDoc = transformCaseStudyCategory(category);
+      await sanityClient.createOrReplace(sanityDoc);
+    }
+
+    console.log("✅ Case study categories migrated successfully");
+  } catch (error) {
+    console.error("❌ Error migrating case study categories:", error.message);
+  }
+}
+
+async function migrateCaseStudies() {
+  console.log("\n💼 Migrating Case Studies...");
+  try {
+    let page = 1;
+    let totalMigrated = 0;
+
+    while (true) {
+      const { posts, totalPages } = await wpClient.getCaseStudies(page);
+      console.log(
+        `Processing page ${page}/${totalPages} (${posts.length} case studies)`
+      );
+
+      for (const post of posts) {
+        const sanityDoc = transformCaseStudy(post, imageAssetMap);
+        await sanityClient.createOrReplace(sanityDoc);
+        totalMigrated++;
+      }
+
+      if (page >= totalPages) break;
+      page++;
+    }
+
+    console.log(`✅ Migrated ${totalMigrated} case studies`);
+  } catch (error) {
+    console.error("❌ Error migrating case studies:", error.message);
+  }
+}
+
 async function main() {
   console.log("🚀 Starting WordPress to Sanity Blog Migration\n");
   console.log("=".repeat(50));
@@ -119,11 +166,13 @@ async function main() {
   // Migrate in order of dependencies
   await migrateCategories();
   await migrateTags();
+  await migrateCaseStudyCategories(); // New step
   await migrateMedia();
   await migratePosts();
+  await migrateCaseStudies(); // New step
 
   console.log("\n" + "=".repeat(50));
-  console.log("🎉 Blog Migration Complete!");
+  console.log("🎉 Blog & Case Study Migration Complete!");
 }
 
 main().catch((error) => {

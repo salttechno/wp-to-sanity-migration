@@ -64,13 +64,48 @@ class WordPressClient {
   async getTags() {
     try {
       const response = await axios.get(`${this.baseUrl}/tags`, {
-        params: {
-          per_page: 100,
-        },
+        params: { per_page: 100 },
       });
       return response.data;
     } catch (error) {
       console.error("Error fetching tags:", error.message);
+      return [];
+    }
+  }
+
+  async getCaseStudyCategories() {
+    try {
+      // Note: Endpoint derived from 'case_studies_category' taxonomy
+      const response = await axios.get(
+        `${this.baseUrl}/case_studies_category`,
+        {
+          params: { per_page: 100 },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching case study categories:", error.message);
+      return [];
+    }
+  }
+
+  async getCaseStudies(page = 1) {
+    try {
+      const response = await axios.get(`${this.baseUrl}/case_studies`, {
+        params: {
+          page,
+          per_page: 20,
+          _embed: true,
+        },
+      });
+
+      return {
+        posts: response.data,
+        totalPages: parseInt(response.headers["x-wp-totalpages"] || "1"),
+        total: parseInt(response.headers["x-wp-total"] || "0"),
+      };
+    } catch (error) {
+      console.error(`Error fetching case studies page ${page}:`, error.message);
       throw error;
     }
   }

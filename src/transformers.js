@@ -82,3 +82,51 @@ export function transformTag(wpTag) {
     description: wpTag.description || "",
   };
 }
+
+export function transformCaseStudyCategory(wpCategory) {
+  return {
+    _type: "caseStudyCategory",
+    _id: `wp-case-study-category-${wpCategory.id}`,
+    title: wpCategory.name,
+    slug: {
+      _type: "slug",
+      current: wpCategory.slug,
+    },
+  };
+}
+
+export function transformCaseStudy(wpPost, imageAssetMap = new Map()) {
+  // Get the featured image asset ID from the map
+  const featuredMediaId = wpPost._embedded?.["wp:featuredmedia"]?.[0]?.id;
+  const assetId = featuredMediaId ? imageAssetMap.get(featuredMediaId) : null;
+
+  // Convert HTML to Portable Text blocks
+  const bodyBlocks = convertHtmlToBlocks(wpPost.content?.rendered || "");
+
+  return {
+    _type: "caseStudy",
+    _id: `wp-case-study-${wpPost.id}`,
+    title: wpPost.title.rendered,
+    slug: {
+      _type: "slug",
+      current: wpPost.slug,
+    },
+    publishedAt: wpPost.date,
+    body: bodyBlocks,
+    categories:
+      wpPost.case_studies_category?.map((catId) => ({
+        _type: "reference",
+        _ref: `wp-case-study-category-${catId}`,
+        _key: `cat-${catId}`,
+      })) || [],
+    featuredImage: assetId
+      ? {
+          _type: "image",
+          asset: {
+            _type: "reference",
+            _ref: assetId,
+          },
+        }
+      : undefined,
+  };
+}

@@ -321,6 +321,21 @@ Use Sanity's query language (GROQ):
 }
 ```
 
+## 🌟 Example: Migrating Custom Post Types
+
+This branch (`example/case-studies-migration`) demonstrates how to extend the tool to migrate custom post types.
+
+In this example, we migrate a **Case Studies** custom post type (`case_studies`) with a custom taxonomy (`case_studies_category`).
+
+### Key Changes Made:
+
+1.  **Schema**: Added `caseStudy.js` and `caseStudyCategory.js` to `studio/schemas/`.
+2.  **Client**: Added `getCaseStudies()` and `getCaseStudyCategories()` to `src/wordpress-client.js`.
+3.  **Transformers**: Added `transformCaseStudy()` and `transformCaseStudyCategory()` to `src/transformers.js`.
+4.  **Migration**: Updated `src/migrate.js` to orchestrate the new migration steps.
+
+This pattern can be adapted for any custom post type (e.g., Portfolio, Events, Products).
+
 ### Is this production-ready?
 
 Yes! This tool has successfully migrated production blogs. However, always test with a Sanity project first before using in production.
@@ -352,7 +367,7 @@ npm run test
 
 ## License
 
-MIT © [Your Name]
+MIT © Salt Technologies
 
 See [LICENSE](LICENSE) for details.
 
@@ -361,6 +376,10 @@ See [LICENSE](LICENSE) for details.
 - Built with [@sanity/client](https://www.npmjs.com/package/@sanity/client)
 - HTML conversion using [@sanity/block-tools](https://www.npmjs.com/package/@sanity/block-tools)
 - Inspired by the Sanity community
+
+## Maintainers
+
+This project is maintained by Salt Technologies, a leading [Software Development Company](https://www.salttechno.com). We specialize in building scalable digital solutions.
 
 ---
 
